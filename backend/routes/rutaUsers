@@ -1,127 +1,70 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../mongoose/modeluser');
+const User = require('../models/modelUser');
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken');
+const { authenticateToken, validateUserType, authAndValidateUserType } = require('../middleware/authMiddleware');
+
+const userController = require('../controllers/userController');
+//const { validateUserType } = require('./authMiddleware');
+
+const multer = require('multer');
+const path = require('path');
 
 // Secret key for JWT (store this securely, preferably in an environment variable)
 const JWT_SECRET = process.env.JWT_SECRET || 'llavesecreta';
 
-router.post('/register', async (req, res) => {
-  try {
-    const { contrasena, ...otherUserData } = req.body;
 
-    // Check if the password is provided
-    if (!contrasena) {
-      return res.status(400).json({ message: 'Password is required' });
-    }
-
-    // Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(contrasena, saltRounds);
-
-    // Create a new user with the hashed password
-    const newUser = new User({
-      ...otherUserData,
-      contrasena: hashedPassword
-    });
-
-    // Save the user to the database
-    await newUser.save();
-
-    // Respond with success message (don't include the password in the response)
-    res.status(201).json({ 
-      message: 'User created successfully', 
-      userId: newUser._id,
-      usuario: newUser.usuario
-    });
-
-  } catch (error) {
-    // Handle specific errors
-    if (error.code === 11000) {
-      // Duplicate key error (e.g., username or email already exists)
-      return res.status(409).json({ message: 'User already exists' });
-    }
-
-    // Generic error handling
-    console.error('Error registering user:', error);
-    res.status(400).json({ message: 'Error creating user', error: error.message });
+// Configuración de multer para manejar la subida de archivos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../uploads/') // Asegúrate de que este directorio exista
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)) // Añade la extensión original del archivo
   }
 });
+
+const upload = multer({ storage: storage });
+//const upload = multer({ dest: 'uploads/' }); // Guarda los archivos en el director
+
+// para insertar el usuario en mongo
+router.post('/register', userController.postRegister);
 
 
 // Route to validate user credentials
-router.post('/login', async (req, res) => {
-  try {
-    const { usuario, contrasena } = req.body;
+// router.post('/login', async (req, res)
+router.post('/login', userController.postLogin) ;
 
-    if (!usuario || !contrasena) {
-      return res.status(400).json({ message: 'Username and password are required' });
-    }
 
-    // Find the user by username
-    const user = await User.findOne({ usuario });
+// para profile
+router.get('/profile', authenticateToken, userController.getProfile);
 
-    if (!user) {
-      return res.json({ valid: false, message: 'Invalid username or password' });
-    }
+// Ruta para actualizar el perfil del usuario
+router.post('/profileUpdate', authenticateToken, upload.single('photo'), userController.postProfileUpdate);
 
-    // Compare the provided password with the stored hash
-    const isPasswordValid = await bcrypt.compare(contrasena, user.contrasena);
-
-    if (isPasswordValid) {
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user._id, username: user.usuario },
-        JWT_SECRET,
-        { expiresIn: '1h' } // Token expires in 1 hour
-      );
-      res.json({
-        message: 'Login successful',
-        token: token,
-        userId: user._id,
-        tipoUsuario: user.tipodeusuario,
-        username: user.usuario
-      });
-      //res.json({ valid: true, message: 'User credentials are valid' });
-    } else {
-      res.json({ valid: false, message: 'Invalid username or password' });
-    }
-  } catch (error) {
-    console.error('Error validating user:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
-// Protected route example
-router.get('/protected', authenticateToken, (req, res) => {
-  res.json({ message: 'You have access to this protected route', user: req.user });
-});
-
-// Middleware to authenticate token
-function authenticateToken(req, res, next) {
+// Ruta para validar el token desde login y perfil cuando llaman auth.js
+router.get('/validate-token', (req, res) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) return res.sendStatus(401);
+  if (!token) {
+    return res.status(401).json({ isValid: false, message: 'No token provided' });
+  }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      console.error('Token verification error:', err);
+      return res.status(403).json({ isValid: false, message: 'Invalid token' });
+    }
+
+    // Opcionalmente, puedes realizar verificaciones adicionales aquí
+    // Por ejemplo, comprobar si el usuario aún existe en la base de datos
+
+    res.json({ isValid: true, message: 'Token is valid', userId: decoded.userId });
   });
-}
+});
 
-
-// router.post('/register', async (req, res) => {
-//   try {
-//     const newUser = new User(req.body);
-//     await newUser.save();
-//     res.status(201).json({ message: 'User created successfully', userId: newUser._id });
-//   } catch (error) {
-//     res.status(400).json({ message: 'Error creating user', error: error.message });
-//   }
-// });
 
 module.exports = router;
 

@@ -1,135 +1,121 @@
-/* Paleta de colores */
-:root {
-    --color-primario: #2C3E50;
-    --color-secundario: #34495E;
-    --color-acento: #3498DB;
-    --color-fondo: #ECF0F1;
-    --color-texto: #333333;
-  }
-  
-  /* Estilos generales */
-  body {
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* menu lateral */
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* menu lateral */
+
+body, html {
     margin: 0;
     padding: 0;
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-  }
-  
-  /* Estilos del encabezado */
-  header {
-    background-color: var(--color-primario);
-    color: #fff;
-    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F7FA;
+    color: #333;
+}
+
+header {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-  }
-
-  #navbar {
-    display: flex;
-    justify-content: space-between;/* Distribuye los elementos a los extremos */
-    align-items: center; /*Centra verticalmente los elementos */
+    align-items: center;
+    padding: 1rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-  
-  #spannombreusuario {
-    display: flex;
-    order: 1;
-    font-weight: bold;
-    font-size: 18px;
-  }
-  
-  #pyl {
-    display: flex;
-    order: 2;
-    justify-content: flex-end;
-    /*padding-left: 500px;*/
-    /*justify-content: flex-end;*/
-    /* justify-content: space-between;
-    align-items: center; */
-    
-  }
 
-  #navbaropciones {
+#spannombreusuario {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+#usuariobienvenido {
+    color: #2563EB;
+}
+
+#navbaropciones {
     list-style-type: none;
     display: flex;
+    gap: 1rem;
     margin: 0;
     padding: 0;
-  }
-  
-  
-  #navbaropciones li {
-    /* margin-left: 20px; */
-    display: inline-block; /* Para que los elementos estén en línea */
-    margin-left: 10px; /* Espaciado entre los elementos */
-  }
-  
-  #navbaropciones a,
-  #btnLogout {
-    display: flex;
-    color: #fff;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+}
 
-  }
-  
-  #navbaropciones a:hover,
-  #btnLogout:hover {
-    background-color: var(--color-secundario);
-  }
-  
-  /* Estilos de la tabla */
-  #tablaDetalle {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #tablaDetalle th,
-  #tablaDetalle td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  #tablaDetalle th {
-    background-color: var(--color-secundario);
-    color: #fff;
-  }
-  
-  /* Estilos de los botones */
-  #divBotones {
-    margin-top: 20px;
-    text-align: center; /* Centrar los botones */
-  }
-  
-  #divBotones button {
-    padding: 10px 20px;
-    margin-right: 10px;
-    background-color: var(--color-acento);
-    color: #fff;
+#navbaropciones li {
+    display: inline;
+}
+
+button {
+    background-color: #2563EB;
+    color: white;
     border: none;
-    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
     cursor: pointer;
-  }
-  
-  #divBotones button:hover {
-    background-color: var(--color-secundario);
-  }
-  
-  /* Estilos de la gráfica */
-  #divgrafica {
-    margin-top: 20px;
-    width: 300px;
-    height: 300px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: auto; /* Centrar la gráfica horizontalmente */
-    margin-right: auto;
-  }
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1D4ED8;
+}
+
+#btnLogout {
+    background-color: #DC2626;
+}
+
+#btnLogout:hover {
+    background-color: #B91C1C;
+}
+
+#mainForm {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    #navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #navbaropciones {
+        width: 100%;
+        justify-content: center;
+    }
+}
