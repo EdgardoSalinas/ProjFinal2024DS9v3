@@ -1,8 +1,5 @@
+import config from '../config.js';
 (() => {
-
-    // Obtener datos del usuario del almacenamiento local
-    // const usuarioAutenticado = JSON.parse(localStorage.getItem('usuarioAutenticado'));
-
 
     const App = {
       htmlElements: {
@@ -16,11 +13,9 @@
         email: document.getElementById("email")
       },
       init() {
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const tipoUsuario = urlParams.get('tipousuario');
         App.bindEvents();
         //App.methods.cargarPerfil();
-        // App.initialValiations();
+        //App.initialValiations();
       },
       // initialValiations() {
       //   Session.shouldNotBeLoggedIn();
@@ -99,37 +94,14 @@
                 .catch(error => {
                   // Handle registration error
                 });
-          // In your main app file (e.g., app.js)
-
-          // const userData = JSON.parse(localStorage.getItem('usuarioNuevo'));
-          // userData.nombrecompleto = App.htmlElements.nombreCompleto.value ;
-          // if (!(userData.contraseña == parseInt(App.htmlElements.contrasena.value))){
-          //     userData.contraseña = App.methods.hashCode(App.htmlElements.contrasena.value);
-          // }
-          // userData.email = App.htmlElements.email.value;
-          // userData.descripcion = App.htmlElements.descripcion.value;
-          // userData.celular = App.htmlElements.celular.value;
-          // userData.pais = App.htmlElements.pais.value;
-          // { usuario: 'Juan', contraseña: '48690', nombrecompleto: 'Juan Bosco'
-          //         , descripcion: 'Desarrollador Web', imagen: 'juan.jpg', pais: 'Panamá', email: 'juanz@gmail.com', celular: '507-6626438'  },
-        //   const userData = {
-        //       usuario: App.htmlElements.usuario.value,
-        //       contraseña: App.methods.hashCode(App.htmlElements.contrasena.value).toString(),
-        //       nombrecompleto: App.htmlElements.nombreCompleto.value,
-        //       descripcion: App.htmlElements.descripcion.value,
-        //       imagen: App.htmlElements.usuario.value.toString() + '.jpg',
-        //       pais: App.htmlElements.pais.value,
-        //       email: App.htmlElements.email.value,
-        //       celular: App.htmlElements.celular.value
-        //   };
-
-        //   localStorage.setItem('usuarioNuevo', JSON.stringify(userData));
   
         },
         
         async  registerUser(userData) {
             try {
-              const response = await fetch('http://localhost:3000/api/users/register', {
+              //`${config.API_BASE_URL}/api/users/profile`
+              //const response = await fetch('http://localhost:3000/api/users/register', {
+              const response = await fetch(`${config.API_BASE_URL}/api/users/register`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -150,15 +122,6 @@
             }
           },
 
-      //   hashCode(str) {
-      //     let hash = 0;
-      //     for (let i = 0, len = str.length; i < len; i++) {
-      //         let chr = str.charCodeAt(i);
-      //         hash = (hash << 5) - hash + chr;
-      //         hash |= 0; // Convertir a entero de 32 bits
-      //     }
-      //     return hash;
-      // }
   
       },
       templates: {},

@@ -1,88 +1,97 @@
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F7FA;
+    color: #333;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center; 
-    height: 100vh; 
-    margin: 0;
-}
-
-/* Estilos del formulario */
-#loginForm {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
 }
 
 h1 {
-    text-align: top;
-    margin-bottom: 5px;
-    color: #333333;
+    color: #2563EB;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 600;
 }
 
-/* Estilos de los campos de entrada */
+#loginForm {
+    background-color: #FFFFFF;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
 label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #555555;
+    margin-bottom: 0.5rem;
+    color: #4B5563;
+    font-weight: 500;
 }
 
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.25rem;
+    font-size: 1rem;
 }
 
-/* Estilos del botón de inicio de sesión */
+button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 #btnsubmit {
-    background-color: #4CAF50;
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-}
-
-
-
-/* Estilos del botón de inicio de sesión */
-#btnregistrarse {
-    background-color: #3b6cd5;
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-    margin-top: 1rem;
-}
-
-#btnregistrarprov {
-    background-color: #4008fb;
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-    margin-top: 1rem;
+    background-color: #2563EB;
+    color: white;
 }
 
 #btnsubmit:hover {
-    background-color: #45a049;
+    background-color: #1D4ED8;
+}
+
+#btnregistrarse {
+    background-color: #10B981;
+    color: white;
+}
+
+#btnregistrarse:hover {
+    background-color: #059669;
+}
+
+#btnregistrarprov {
+    background-color: #F59E0B;
+    color: white;
+}
+
+#btnregistrarprov:hover {
+    background-color: #D97706;
+}
+
+@media (max-width: 480px) {
+    #loginForm {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
 }

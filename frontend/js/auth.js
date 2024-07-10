@@ -1,6 +1,5 @@
 // auth.js
-
-
+import config from '../config.js';
 export function setUserType(type) {
   if (type === 'usuario' || type === 'proveedor') {
     localStorage.setItem('userType', type);
@@ -21,18 +20,20 @@ export function isUserLoggedIn() {
     }
     
     //disable temporaly
-    // const tokenExpiration = localStorage.getItem('tokenExpiration');
-    // if (tokenExpiration && new Date().getTime() > parseInt(tokenExpiration)) {
-    //   localStorage.removeItem('authToken');
-    //   localStorage.removeItem('tokenExpiration');
-    //   return false;
-    // }
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
+    if (tokenExpiration && new Date().getTime() > parseInt(tokenExpiration)) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('tokenExpiration');
+      return false;
+    }
     return true;
   }
   
   export async function validateTokenWithBackend() {
     try {
-      const response = await fetch('/api/validate-token', {
+      //`${config.API_BASE_URL}
+      //      const response = await fetch('http://localhost:3000/api/users/validate-token', {
+      const response = await fetch(`${config.API_BASE_URL}/api/users/validate-token`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
@@ -58,13 +59,13 @@ export function isUserLoggedIn() {
     }
     
     //disable
-    // const isTokenValid = await validateTokenWithBackend();
-    // if (!isTokenValid) {
-    //   localStorage.removeItem('authToken');
-    //   localStorage.removeItem('tokenExpiration');
-    //   window.location.href = '/login.html';
-    //   return false;
-    // }
+    const isTokenValid = await validateTokenWithBackend();
+    if (!isTokenValid) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('tokenExpiration');
+      //window.location.href = '/login.html';
+      return false;
+    }
     return true;
   }
 

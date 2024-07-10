@@ -1,3 +1,4 @@
+import config from '../config.js';
 import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './auth.js';
 (() => {
     const App = {
@@ -27,7 +28,6 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
             "click",
             App.handlers.onClickRegistrarprov,
           );
-
       },
   
       handlers: {
@@ -65,20 +65,27 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
           // usuario para clientes
           const tipoUsuario = 'proveedor';
           window.location.href = `registro.html?tipousuario=${tipoUsuario}`;
-      },
-
-        
-
+        },
         //check if token exist or not
         //if exist token go to main page
         async checkLogin() {
             console.log("entro a checkLogin usuarios");
             const sesionValida = await checkUserSession();
-            if (sesionValida) {
+            if (sesionValida && !window.location.pathname.endsWith('index.html')) {
               window.location.href = 'index.html';
-              // La redirección ya se maneja en checkUserSession, 
-              // pero puedes agregar lógica adicional aquí si es necesario
             }
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('tokenExpiration');
+            localStorage.removeItem('userType');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userId');
+             // Si estamos en la página de login y la sesión es válida, redirigir a index.html
+
+            // if (sesionValida) {
+            //   window.location.href = 'index.html';
+            //   // La redirección ya se maneja en checkUserSession, 
+            //   // pero puedes agregar lógica adicional aquí si es necesario
+            // }
             // valida si existe usuarioNuevo para agregarlo a usuarios
             // if (localStorage.getItem('usuarioNuevo')) {
             //     const usuarioNuevo = JSON.parse(localStorage.getItem('usuarioNuevo'));
@@ -94,7 +101,7 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
             //             window.location.href = 'index.html';
   
             // }        
-          },
+        },
          
         // autenticarUsuario(usuarios, username, password) {
         //   return usuarios.find(
@@ -143,7 +150,9 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
 
         async validateUser(username, password) {
           try {
-            const response = await fetch('http://localhost:3000/api/users/login', {
+            //`${config.API_BASE_URL}/api/users/profile`
+            //const response = await fetch('http://localhost:3000/api/users/login', {
+            const response = await fetch(`${config.API_BASE_URL}/api/users/login`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -160,28 +169,25 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
         
             const data = await response.json();
             // Store the token in localStorage
+            console.log(data);
             localStorage.setItem('authToken', data.token);
             localStorage.setItem('userType', data.tipoUsuario);
+            localStorage.setItem('userId', data.UserId);
+            localStorage.setItem('userName', data.userName);
             window.location.href = 'index.html';
+
             return data;
           } catch (error) {
             console.error('Error validating user:', error);
             throw error;
           }
         },
-
-
-
-
-
-  
         // fin methods
       },
-  
+ 
       render(html) {
         App.htmlElements.results.innerHTML += html;
       },
-  
   
     }; // fin de const App
     App.init();

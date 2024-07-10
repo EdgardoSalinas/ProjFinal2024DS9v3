@@ -1,11 +1,4 @@
 
-// const express = require('express');
-// const mongoose = require('mongoose');
-// import cors from 'cors';
-// require('dotenv').config();
-// app.js
-
-
 require('dotenv').config();
 
 const express = require('express');
@@ -16,11 +9,21 @@ const cors = require('cors');
 const { connectToDatabase } = require('./mongoose/db');
 
 const app = express();
+
 app.use(cors());
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 const userRoutes = require('./routes/rutaUsers');
+const servicioRoutes = require('./routes/servicioRoutes');
+//const familiarRoutes = require('./routes/rutaFamiliarDeprecated');
 
 app.use(express.json());
+
 app.use('/api/users', userRoutes);
+app.use('/api/servicios', servicioRoutes);
+//app.use('/api/familiar', familiarRoutes);
 
 // Connect to the database
 connectToDatabase();
@@ -29,22 +32,6 @@ connectToDatabase();
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  console.log(`jwt-palabra ${process.env.JWT_SECRET}`);
   console.log(`Server is running on port ${PORT}`);
 });
-
-// const app = express();
-// const urlMongo = 'mongodb+srv://emsalinasl:utpds924@clusterdsix24.kzejgkh.mongodb.net/?retryWrites=true&w=majority&appName=ClusterDSIX24'
-
-// // Connect to MongoDB
-// mongoose.connect(urlMongo, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// })
-// .then(() => console.log('Connected to MongoDB'))
-// .catch(err => console.error('Could not connect to MongoDB', err));
-
-// // Define routes and middleware here
-
-// const port = process.env.PORT || 3000;
-// app.listen(port, () => console.log(`Server running on port ${port}`));
-
