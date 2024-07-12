@@ -72,7 +72,7 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
             console.log("entro a checkLogin usuarios");
             const sesionValida = await checkUserSession();
             if (sesionValida && !window.location.pathname.endsWith('index.html')) {
-              window.location.href = 'index.html';
+              window.location.href = '../index.html';
             }
             localStorage.removeItem('authToken');
             localStorage.removeItem('tokenExpiration');
@@ -120,7 +120,8 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
             const result = await App.methods.validateUser(username, password);
             if (result.valid) {
               console.log('Login successful');
-              window.location.href = 'index.html';
+              
+              window.location.href = '../index.html';
               // Redirect to dashboard or update UI for logged-in state
             } else {
               console.log('Login failed:', result.message);
@@ -174,7 +175,7 @@ import { isUserLoggedIn, validateTokenWithBackend, checkUserSession } from './au
             localStorage.setItem('userType', data.tipoUsuario);
             localStorage.setItem('userId', data.UserId);
             localStorage.setItem('userName', data.userName);
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
 
             return data;
           } catch (error) {

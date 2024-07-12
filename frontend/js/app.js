@@ -15,6 +15,7 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
         menuCarrito: document.querySelector('.sidebar a[href="#carrito"]'),
         menuPerfil: document.querySelector('.sidebar a[href="#perfil"]'),
         menuServicios: document.querySelector('.sidebar a[href="#servicios"]'),
+        menucontratarServicios: document.querySelector('.sidebar a[href="#contratarServicios"]'),
         menuOrdenes: document.querySelector('.sidebar a[href="#ordenes"]'),
         menuFacturas: document.querySelector('.sidebar a[href="#facturas"]'),
       },
@@ -35,6 +36,7 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
         App.htmlElements.menuCarrito.addEventListener("click", App.handlers.onClickCarrito);
         App.htmlElements.menuPerfil.addEventListener("click", App.handlers.onClickPerfil);
         App.htmlElements.menuServicios.addEventListener("click", App.handlers.onClickServicios);
+        App.htmlElements.menucontratarServicios.addEventListener("click", App.handlers.onClickContratarServicios);
         App.htmlElements.menuOrdenes.addEventListener("click", App.handlers.onClickOrdenes);
         App.htmlElements.menuFacturas.addEventListener("click", App.handlers.onClickFacturas);
 
@@ -58,6 +60,11 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
           App.methods.openServicio();
           // Lógica para manejar el clic en "Servicios por Proveedor"
         },
+        onClickContratarServicios() {
+          App.methods.openContratarServicio();
+          // Lógica para manejar el clic en "Servicios por Proveedor"
+        },
+
         onClickOrdenes() {
           App.methods.openPerfil();
           // Lógica para manejar el clic en "Mis Ordenes"
@@ -77,7 +84,7 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
                 // Inicializar el tipo de usuario al cargar la aplicación
             const userType = getCurrentUserType();
             //this.configurarAplicacionParaTipoUsuario(userType);
-            window.location.href = 'login.html';
+            window.location.href = './html/login.html';
             // La redirección ya se maneja en checkUserSession, 
             // pero puedes agregar lógica adicional aquí si es necesario
           }else{
@@ -123,15 +130,21 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
         openPerfil(){
           const userType = getCurrentUserType();
           if (userType === 'usuario') {
-            window.location.href = 'perfil.html';
+            window.location.href = './html/perfil.html';
           } else if (userType === 'proveedor') {
-            window.location.href = 'perfilp.html';
+            window.location.href = './html/perfilp.html';
           }
         },
         openServicio(){
           const userType = getCurrentUserType();
           if (userType === 'proveedor') {
-            window.location.href = 'nuevo-servicio.html';
+            window.location.href = './html/nuevo-servicio.html';
+          } 
+        },
+        openContratarServicio(){
+          const userType = getCurrentUserType();
+          if (userType === 'usuario') {
+            window.location.href = './html/servicioShop.html';
           } 
         },
 
