@@ -19,7 +19,7 @@ router.post('/servicios', async (req, res) => {
 });
 
 // Obtener todos los servicios
-router.get('/servicios', async (req, res) => {
+router.get('/serviciosgetall', async (req, res) => {
   try {
     const services = await Service.find();
     res.status(200).send(services);
