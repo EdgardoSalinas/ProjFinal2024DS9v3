@@ -7,22 +7,71 @@
   <link rel="stylesheet" href="../css/servicioShop.css">
 </head>
 <body>
+  <div class="page-container">
+    <div class="service-container">
+      <button id="closeButton" class="close-button">Cerrar</button>
+      <div id="serviceList"></div>
+      <div class="pagination">
+        <button id="prevPage">Anterior</button>
+        <span id="currentPage">1</span> / <span id="totalPages">1</span>
+        <button id="nextPage">Siguiente</button>
+      </div>
+    </div>
+    <div class="order-container">
+      <h2>Órdenes</h2>
+      <div id="orderList"></div>
+    </div>
+  </div>
+
+<!-- 
   <h1>Servicios Disponibles</h1>
   <div class="service-container">
     <div id="serviceList"></div>
-  </div>
+    
+    <div class="service-container">
+
+      <div id="serviceList"></div>
+
+      <div class="order-container">
+        <h2>Órdenes</h2>
+        <div id="orderList"></div>
+      </div>
+
+      <button id="closeButton" class="close-button">Cerrar</button>
+
+      <div class="pagination">
+        <button id="prevPage">Anterior</button>
+        <span id="currentPage">1</span> / <span id="totalPages">1</span>
+        <button id="nextPage">Siguiente</button>
+      </div>
+
+    </div>
+  </div> -->
+
   <div id="appointmentModal" class="modal">
     <div class="modal-content">
       <span id="closeModal" class="close">&times;</span>
       <div id="modalContent"></div>
     </div>
   </div>
-  
+
+
+  <div id="appointmentModalpp" class="paypal-modal ">
+  <div class="paypal-modal-content">
+    <span id="closeModalpp" class="paypal-close">&times;</span>
+    <div id="modalContentpp"></div>
+  </div>
+  </div>
+
   <!-- <div id="appointmentForm" >
     <form id="forma>Cita">
 
     </form>
   </div> -->
+
+  <div id="paypal-button-container"></div>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=AYwYDO3mUZuKKmbSWFOPJ6uLCoSWlLD2Pg6kbUn7AhmdvwKCyo6Uv8BsAIxMGAMBUNAvvoB-kvoYJXlg&currency=USD"></script>
 
   <script type="module" src="..\js\servicioShop.js"></script>
 </body>
