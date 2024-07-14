@@ -5,6 +5,7 @@ const ServiceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    usuarioproveedor: String,
     nombre: {
         type: String,
         required: true,

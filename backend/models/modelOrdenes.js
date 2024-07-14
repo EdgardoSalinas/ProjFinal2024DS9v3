@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { getNextSequence } = require('../models/modelContador');
 
 // Primero, definimos el esquema para la cita del servicio
 const citaDelServicioSchema = new Schema({
@@ -7,17 +8,15 @@ const citaDelServicioSchema = new Schema({
   fechaFinal: Date,
   horaInicio: String,
   horaFin: String,
+  nombreCliente: String,
+  emailCliente: String
   // Puedes agregar más campos específicos de la cita si es necesario
 });
 
 // Ahora, definimos el esquema principal
 const ordenServicioSchema = new Schema({
   numeroOrden: Number,
-  usuario: { 
-    type: String, 
-    required: true, 
-    unique: true 
-  },
+  usuario: String, 
   idDelServicio: String,
   usuarioDelProveedor: String,
   fechaCreacion: { 
@@ -26,7 +25,7 @@ const ordenServicioSchema = new Schema({
   },
   estado: { 
     type: String, 
-    enum: ['pendiente', 'en_proceso', 'completado', 'cancelado'], 
+    enum: ['pendiente', 'pagado', 'en_proceso', 'completado', 'cancelado'], 
     default: 'pendiente' 
   },
   calificacion: { 
@@ -45,10 +44,19 @@ const ordenServicioSchema = new Schema({
     comment: "Cantidad de horas"
   },
   precio: Number,
-  monto: Number
+  monto: Number,
+  descripcion: String
+});
+
+ordenServicioSchema.pre('save', async function(next) {
+  if (!this.numeroOrden) {
+      this.numeroOrden = await getNextSequence('numeroOrden');
+  }
+  next();
 });
 
 // Creamos el modelo a partir del esquema
 const OrdenServicio = mongoose.model('OrdenServicio', ordenServicioSchema);
 
 module.exports = OrdenServicio;
+

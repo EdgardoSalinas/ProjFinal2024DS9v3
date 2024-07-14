@@ -130,7 +130,7 @@ import config from '..//config.js';
             },
 
             obtenerDatosFormulario() {
-                const usuario =  localStorage.getItem('userName');
+                const usuarioproveedor =  localStorage.getItem('userName');
                 const tipoServicio = App.htmlElements.tipoServicioSelect.value;
                 const nombre = App.htmlElements.nombreInput.value.trim();
                 const descripcion = App.htmlElements.descripcionTextarea.value.trim();
@@ -140,7 +140,7 @@ import config from '..//config.js';
                 const horarioHasta = App.htmlElements.horarioHastaInput.value;
                 const precioHora = App.htmlElements.precioHoraInput.value.trim();
                 const imagenes = Array.from(App.htmlElements.imagenesInput.files).map(file => URL.createObjectURL(file));
-                return { usuario, tipoServicio, nombre, descripcion, amenidades, diasSemana, horarioDesde, horarioHasta, precioHora, imagenes };
+                return { usuarioproveedor, tipoServicio, nombre, descripcion, amenidades, diasSemana, horarioDesde, horarioHasta, precioHora, imagenes };
             },
 
           
