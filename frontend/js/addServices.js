@@ -4,6 +4,14 @@ import config from '..//config.js';
 
     const App = {
         htmlElements: {
+            // IMAGEN BY URL
+            photoInput: document.getElementById("photoInput"),
+            photoPreview: document.getElementById("photoPreview"),
+            chooseImageBtn: document.getElementById("chooseImage"),
+            removeImageBtn: document.getElementById("removeImage"),       
+            // IMAGEN BY URL        
+
+            form: document.getElementById('formularioServicio'),            
             tipoServicioSelect: document.getElementById('tipoServicio'),
             nombreInput: document.getElementById('nombre'),
             descripcionTextarea: document.getElementById('descripcion'),
@@ -13,8 +21,11 @@ import config from '..//config.js';
             horarioDesdeInput: document.getElementById('horarioDesde'),
             horarioHastaInput: document.getElementById('horarioHasta'),
             precioHoraInput: document.getElementById('precioHora'),
+
             imagenesInput: document.getElementById('imagenes'),
+
             notification: document.getElementById('notification'),
+            cancelButton: document.getElementById("cancelButton"),
             errorMessages: {
                 tipoServicioError: document.getElementById('tipoServicioError'),
                 nombreError: document.getElementById('nombreError'),
@@ -25,6 +36,7 @@ import config from '..//config.js';
                 precioHoraError: document.getElementById('precioHoraError'),
                 imagenesError: document.getElementById('imagenesError')
             }
+
         },
 
         init() {
@@ -32,9 +44,16 @@ import config from '..//config.js';
         },
 
         bindEvents() {
+            //
+            App.htmlElements.chooseImageBtn.addEventListener("click", App.handlers.onChooseImage);
+            App.htmlElements.removeImageBtn.addEventListener("click", App.handlers.onRemoveImage);
+            App.htmlElements.photoInput.addEventListener("change", App.handlers.onPhotoSelected);
+        
+            //
             const formulario = document.getElementById('formularioServicio');
             formulario.addEventListener('submit', this.handlers.onSubmitFormulario);
             App.htmlElements.todosLosDiasCheckbox.addEventListener('change', this.handlers.onToggleTodosLosDias);
+            App.htmlElements.cancelButton.addEventListener("click", App.handlers.onCancel);
         },
 
         handlers: {
@@ -55,10 +74,34 @@ import config from '..//config.js';
                 App.htmlElements.diasCheckboxes.forEach(checkbox => {
                     checkbox.checked = isChecked;
                 });
-            }
+            },
+            onCancel() { App.methods.onCancelbtn()},
+            // image url
+            onChooseImage() {
+                App.htmlElements.photoInput.click();
+            },
+            onRemoveImage() {
+                App.htmlElements.photoPreview.src = "placeholder-image.png";
+                App.htmlElements.photoInput.value = "";
+              },
+            onPhotoSelected(event) {
+                const file = event.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    App.htmlElements.photoPreview.src = e.target.result;
+                  };
+                  reader.readAsDataURL(file);
+                }
+            },
+              
+
         },
 
         methods: {
+            onCancelbtn() {
+                window.history.back();
+              },
             validarFormulario() {
                 let esValido = true;
                 if (!App.htmlElements.tipoServicioSelect.value) {
@@ -97,17 +140,20 @@ import config from '..//config.js';
                     App.htmlElements.precioHoraInput.classList.add('error-border');
                     App.htmlElements.errorMessages.precioHoraError.style.display = 'block';
                 }
-                if (!App.htmlElements.imagenesInput.files.length) {
-                    esValido = false;
-                    App.htmlElements.imagenesInput.classList.add('error-border');
-                    App.htmlElements.errorMessages.imagenesError.style.display = 'block';
-                }
+                // if (!App.htmlElements.imagenesInput.files.length) {
+                //     esValido = false;
+                //     App.htmlElements.imagenesInput.classList.add('error-border');
+                //     App.htmlElements.errorMessages.imagenesError.style.display = 'block';
+                // }
                 return esValido;
             },
 
             clearValidationErrors() {
                 for (const element of Object.values(App.htmlElements.errorMessages)) {
-                    element.style.display = 'none';
+                    // disable por error
+                    // if (element.style.display) {
+                    //     element.style.display = 'none'
+                    // };
                 }
                 App.htmlElements.tipoServicioSelect.classList.remove('error-border');
                 App.htmlElements.nombreInput.classList.remove('error-border');
@@ -117,7 +163,7 @@ import config from '..//config.js';
                 App.htmlElements.horarioDesdeInput.classList.remove('error-border');
                 App.htmlElements.horarioHastaInput.classList.remove('error-border');
                 App.htmlElements.precioHoraInput.classList.remove('error-border');
-                App.htmlElements.imagenesInput.classList.remove('error-border');
+                // App.htmlElements.imagenesInput.classList.remove('error-border');
             },
 
             showNotification(message, type) {
@@ -139,21 +185,48 @@ import config from '..//config.js';
                 const horarioDesde = App.htmlElements.horarioDesdeInput.value;
                 const horarioHasta = App.htmlElements.horarioHastaInput.value;
                 const precioHora = App.htmlElements.precioHoraInput.value.trim();
-                const imagenes = Array.from(App.htmlElements.imagenesInput.files).map(file => URL.createObjectURL(file));
-                return { usuarioproveedor, tipoServicio, nombre, descripcion, amenidades, diasSemana, horarioDesde, horarioHasta, precioHora, imagenes };
+                const imagenes = [];
+                const photoUrl = {};
+                //const imagenes = Array.from(App.htmlElements.imagenesInput.files).map(file => URL.createObjectURL(file));
+                if (App.htmlElements.photoInput.files[0]) {
+                     const photoUrl = App.htmlElements.photoInput.files[0];
+                } 
+                const formData = new FormData();
+                Array.from(App.htmlElements.form).forEach(element => {
+                    if (element.name && !element.disabled) {
+                        formData.append(element.name, element.value);
+                        console.log(`Elemento agregado: ${element.name} = ${element.value}`);
+                    }
+                    });
+                return (formData);
+                //return { usuarioproveedor, tipoServicio, nombre, descripcion, amenidades, diasSemana, horarioDesde, horarioHasta, precioHora, imagenes, photoUrl };
             },
 
           
-            async guardarServicio(data) {
+            async guardarServicio(formData) {
+                //                         body: JSON.stringify(data)
                 try {
                     //`${config.API_BASE_URL}
                     //                     const response = await fetch('/api/servicios', {
+                    console.log("data guardarservicio", JSON.stringify(formData));
+
+                    const updatedFormData = new FormData();
+                    for (let [key, value] of formData.entries()) {
+                      updatedFormData.append(key, value);
+                    }
+                    if (App.htmlElements.photoInput.files[0]) {
+                        updatedFormData.append('photo', App.htmlElements.photoInput.files[0]);
+                    }
+
                     const response = await fetch(`${config.API_BASE_URL}/api/servicios/servicios`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(data)
+                        body: updatedFormData,
+                        headers: {
+                          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                        }
                     });
 
                     if (!response.ok) {

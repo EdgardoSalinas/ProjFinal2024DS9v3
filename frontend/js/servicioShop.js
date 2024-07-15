@@ -568,8 +568,8 @@ import config from '../config.js';
 //                        <p class="service-content p">Amenidades: ${service.amenidades}</p>
 
             return `
-                              <div class="service-card">
-                        <div class="service-content">
+                <div class="service-card">
+                   <div class="service-content">
                                 
                             <div class="field">
                                   <span class="field-value">${truncatedDescription}</span>
@@ -589,18 +589,15 @@ import config from '../config.js';
                             <p class="service-price">Precio/Hora: $${service.precioHora}</p>
                             
                             <button class="appointment-button" onclick="App.handlers.bookAppointment('${service._id}','${service.usuarioproveedor}','${service.precioHora}','${truncatedDescription}')">Agendar</button>
-
-					
-							
-                        </div>
-							<div class="service-image">
-                                ${imagenUrl ? `<img src="${imagenUrl}" alt="${service.nombre}">` : ''}
-							</div>
-
-
-                 </div>
+                  </div>
+                  <div class="service-image">
+                                  ${service.photoUrl ? `<img src="${service.photoUrl}" alt="${service.nombre}">` : ''}
+                  </div>
+              </div>
             `;
         },
+
+        //                                ${imagenUrl ? `<img src="${imagenUrl}" alt="${service.nombre}">` : ''}
         appointmentFormTemplate(serviceId,usuarioproveedor,precioHora,truncatedDescription) {
           return `
         <form onsubmit="App.handlers.submitAppointment(event)">
@@ -649,6 +646,7 @@ import config from '../config.js';
         //const serviceListHTML = services.map(App.templates.serviceTemplate).join('');
         //App.htmlElements.serviceList.innerHTML = serviceListHTML;
         //
+        console.log(services);
         const startIndex = (App.state.currentPage - 1) * App.state.servicesPerPage;
         const endIndex = startIndex + App.state.servicesPerPage;
         const pageServices = App.state.services.slice(startIndex, endIndex);

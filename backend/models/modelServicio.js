@@ -38,6 +38,7 @@ const ServiceSchema = new mongoose.Schema({
         type: [String],
         required: true,
     },
+    photoUrl: String,
 });
 
 module.exports = mongoose.model('Service', ServiceSchema);

@@ -49,7 +49,7 @@ import config from '../config.js';
           const btnVolver = document.createElement("button");
           btnVolver.innerText = "Retornar";
           btnVolver.addEventListener("click", () => {
-              window.location.href = "index.html";
+              window.location.href = "../index.html";
           });
           divResultado.appendChild(btnVolver);
          // App.methods.cargarPerfil();
@@ -59,7 +59,7 @@ import config from '../config.js';
       methods: {
         cargarPerfil() {
           if (App.methods.usuarioAutenticado()) {
-              window.location.href = 'index.html';
+              window.location.href = '../index.html';
   
           } 
           else {
@@ -72,7 +72,7 @@ import config from '../config.js';
         },
         hacerLogout(){
           //localStorage.removeItem("usuarioAutenticado");
-          window.location.href = "index.html";
+          window.location.href = "../index.html";
         },
   
         hacerSalvar(){
