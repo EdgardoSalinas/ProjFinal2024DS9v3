@@ -108,15 +108,15 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
             }
     
             const userProfile = await response.json();
-            App.methods.mostrarNombreUsuario(userProfile.nombre);
+            App.methods.mostrarNombreUsuario(userProfile.nombre,userProfile.tipodeusuario);
           } catch (error) {
             console.error('Error al cargar el perfil del usuario:', error);
-            App.methods.mostrarNombreUsuario('Usuario');
+            App.methods.mostrarNombreUsuario('Usuario','tipodeusuario');
           }
         },
     
-        mostrarNombreUsuario(nombre) {
-          App.htmlElements.usuariobienvenido.textContent = `Bienvenido, ${nombre}`;
+        mostrarNombreUsuario(nombre, tipodeusuario) {
+          App.htmlElements.usuariobienvenido.textContent = `Bienvenido, ${tipodeusuario} ${nombre} `;
         },
         hacerLogout(){
           // aqui hay que borrar los token del usuario

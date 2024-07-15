@@ -24,14 +24,14 @@ export const validateForm = (form) => {
     }
   
     // Validación específica para el número de celular
-    const celularField = form['numerodecelular'];
-    if (celularField && celularField.value.trim()) {
-      const celularRegex = /^\d{10}$/; // Asume un número de 10 dígitos, ajusta según tus necesidades
-      if (!celularRegex.test(celularField.value.trim())) {
-        isValid = false;
-        errorMessages.push('El número de celular debe tener 10 dígitos');
-      }
-    }
+    // const celularField = form['numerodecelular'];
+    // if (celularField && celularField.value.trim()) {
+    //   const celularRegex = /^\d{8}$/; // Asume un número de 10 dígitos, ajusta según tus necesidades
+    //   if (!celularRegex.test(celularField.value.trim())) {
+    //     isValid = false;
+    //     errorMessages.push('El número de celular debe tener 10 dígitos');
+    //   }
+    // }
   
     // Si hay errores, mostrarlos al usuario
     if (!isValid) {

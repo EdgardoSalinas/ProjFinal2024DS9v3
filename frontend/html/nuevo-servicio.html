@@ -9,6 +9,20 @@
 <body>
     <h1>Agregar Nuevo Servicio</h1>
     <form id="formularioServicio">
+
+                <!-- IMAGENES POR URL  -->
+                <div class="photo-section">
+                    <!-- <h2>Foto</h2> -->
+                    <div class="photo-container">
+                      <img  id="photoPreview" src="placeholder-image.png" alt="Foto de perfil" width="150" height="150">
+                      <p>Subir Foto en formato PNG o JPG</p>
+                      <button type="button" id="chooseImage">Seleccione imagen</button>
+                      <button type="button" id="removeImage">Remover imagen</button>
+                      <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+        
+
         <label for="tipoServicio">Tipo de Servicio:</label>
         <select id="tipoServicio" name="tipoServicio">
             <option value="">Seleccione una opción</option>
@@ -53,11 +67,19 @@
         <input type="number" id="precioHora" name="precioHora">
         <span id="precioHoraError" class="error-message">Campo requerido</span>
 
-        <label for="imagenes">Imágenes:</label>
+        <!-- <label for="imagenes">Imágenes:</label>
         <input type="file" id="imagenes" name="imagenes" multiple>
-        <span id="imagenesError" class="error-message">Campo requerido</span>
+        <span id="imagenesError" class="error-message">Campo requerido</span> -->
 
-        <button type="submit">Guardar Servicio</button>
+
+        <!-- <button type="submit">Guardar Servicio</button> -->
+
+        
+        <div class="form-actions">
+            <button type="button" id="cancelButton">Cerrar</button>
+            <button type="submit" id="guardarServicio">Guardar Servicio</button>
+        </div>
+
     </form>
 
     <div id="notification" class="notification"></div>
