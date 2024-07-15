@@ -237,8 +237,7 @@ import config from '../config.js';
         
             const response = await fetch(url);
             const data = await response.json();
-
-            
+          
             // Verifica si la respuesta tiene una propiedad 'ordenes'
             if (Array.isArray(data.ordenes)) {
               App.state.orders = data.ordenes;
