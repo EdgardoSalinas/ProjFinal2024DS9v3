@@ -99,4 +99,68 @@ router.post('/updateStatus', async (req, res) => {
 });
 
 
+// vista de ordenes
+
+// const express = require('express');
+// const router = express.Router();
+// const OrdenServicio = require('../models/modelOrdenes');
+
+// GET /api/ordenes/miordenes
+// no funciona
+router.get('/miordenes', async (req, res) => {
+    try {
+        // Asume que el ID del usuario está en req.user.id (requiere autenticación)
+        //const ordenes = await OrdenServicio.find({ usuario: req.user.id }).sort({ fechaCreacion: -1 });
+        console.log("usuario", req.usuario);
+        const ordenes = await OrdenServicio.find({ usuario: req.usuario }).sort({ fechaCreacion: -1 });
+        res.json(ordenes);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener las órdenes', error: error.message });
+    }
+});
+
+// POST /api/ordenes/updateStatus
+router.post('/updateStatusV2', async (req, res) => {
+    const { orderId, newStatus } = req.body;
+    try {
+        const orden = await OrdenServicio.findOneAndUpdate(
+            { numeroOrden: orderId, usuario: req.user.id },
+            { estado: newStatus },
+            { new: true }
+        );
+        if (!orden) {
+            return res.status(404).json({ success: false, message: 'Orden no encontrada' });
+        }
+        res.json({ success: true, message: 'Estado de la orden actualizado' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error al actualizar el estado de la orden' });
+    }
+});
+
+// POST /api/ordenes/rate
+router.post('/rate', async (req, res) => {
+  //{ numeroOrden: orderId, usuario: req.user.id },
+    const { orderId, rating } = req.body;
+    try {
+        const orden = await OrdenServicio.findOneAndUpdate(
+            { numeroOrden: orderId },
+            {
+                calificacion: {
+                    puntaje: rating,
+                    fecha: new Date()
+                }
+            },
+            { new: true }
+        );
+        if (!orden) {
+            return res.status(404).json({ success: false, message: 'Orden no encontrada' });
+        }
+        res.json({ success: true, message: 'Orden calificada exitosamente' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error al calificar la orden' });
+    }
+});
+
+
+
 module.exports = router;

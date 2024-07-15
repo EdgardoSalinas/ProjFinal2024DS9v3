@@ -16,7 +16,7 @@ const servicioRoutes = require('./routes/servicioRoutes');
 //const familiarRoutes = require('./routes/rutaFamiliarDeprecated');
 const ordenServicioRoutes = require('./routes/ordenesRoutes');
 const payOrdenRoutes = require('./routes/paypalRoutes');
-
+const crudModelos = require('./routes/crudRoutes');
 
 app.use(cors());
 
@@ -26,6 +26,7 @@ app.use('/api/servicios', servicioRoutes);
 //app.use('/api/familiar', familiarRoutes);
 app.use('/api/ordenes', ordenServicioRoutes);
 app.use('/api/payment', payOrdenRoutes);
+app.use('/api/crudmodel', crudModelos);
 
 // Connect to the database
 connectToDatabase();
