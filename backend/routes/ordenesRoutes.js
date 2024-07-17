@@ -155,6 +155,8 @@ router.post('/rate', async (req, res) => {
         if (!orden) {
             return res.status(404).json({ success: false, message: 'Orden no encontrada' });
         }
+      
+
         res.json({ success: true, message: 'Orden calificada exitosamente' });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Error al calificar la orden' });

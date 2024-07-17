@@ -8,30 +8,23 @@
 </head>
 <body>
     <header>
-        <nav id="navbar">
+
+      <div id="navbar-placeholder"></div>
+        <!-- <nav id="navbar">
             <div id="spannombreusuario">
               <span id="usuariobienvenido">Bienvenido, [Nombre de Usuario]</span>
             </div>
             <div id="pyl">
                 <ul id="navbaropciones">
-<!--                     
-                    <li>
-                      <button id="btnPerfil" type="submit">Perfil</button>
-                    </li>
- -->
                     <li>
                       <button id="btnLogout" type="submit">Cerrar Sesion</button>
                     </li>
-                  </ul>
-     
+                </ul>
             </div>
-
-        </nav>
-
+       </nav> -->
 
 
     </header>
-
 
     <div class="container">
       <div class="sidebar">
@@ -91,8 +84,18 @@
   </div>
 
   <!-- <form id="mainForm">
-          
+  
   </form> -->
+
+
+  <script>
+    fetch('html/navbarI.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+        });
+
+  </script>
   <script type="module" src=".\js\app.js"></script>
   
 </body>

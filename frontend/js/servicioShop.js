@@ -5,12 +5,15 @@ import config from '../config.js';
 
       state: {
         currentPage: 1,
-        servicesPerPage: 3,
+        servicesPerPage: 2,
         services: [],
         orders: [],
       },
 
       htmlElements: {
+
+        usuariobienvenido: document.getElementById("usuariobienvenido"),
+
         serviceList: document.getElementById('serviceList'),
 
         modal: document.getElementById('appointmentModal'),
@@ -38,6 +41,8 @@ import config from '../config.js';
       },
       initialValidations() {
         // Realizar validaciones iniciales si es necesario
+        const usuariofiltro = localStorage.getItem('userName');
+        App.htmlElements.usuariobienvenido.textContent = `Bienvenido,  ${usuariofiltro} `;
       },
       bindEvents() {
         App.htmlElements.closeModal.addEventListener('click', App.methods.hideAppointmentForm);
@@ -570,8 +575,8 @@ import config from '../config.js';
                 <div class="service-card">
                    <div class="service-content">
                                 
-                            <div class="field">
-                                  <span class="field-value">${truncatedDescription}</span>
+                            <div class="service-content">
+                                  <span class="field-value-h">${truncatedDescription}</span>
                             </div>
                             <div class="field">
                                   <span class="field-value">${truncatedAmenities}</span>
@@ -585,8 +590,11 @@ import config from '../config.js';
                                   <span class="field-value">${service.horarioDesde} - ${service.horarioHasta}</span>
                             </div>
                             
+                            ${service.calificacion ? `<p>Calificación: ${'★'.repeat(service.calificacion.puntaje)}${'☆'.repeat(5-service.calificacion.puntaje)}</p>` : ''}
+
                             <p class="service-price">Precio/Hora: $${service.precioHora}</p>
                             
+
                             <button class="appointment-button" onclick="App.handlers.bookAppointment('${service._id}','${service.usuarioproveedor}','${service.precioHora}','${truncatedDescription}')">Agendar</button>
                   </div>
                   <div class="service-image">

@@ -130,7 +130,12 @@ import { getCurrentUserType, setCurrentUserType } from './globalState.js';
         },
     
         mostrarNombreUsuario(nombre, tipodeusuario) {
-          App.htmlElements.usuariobienvenido.textContent = `Bienvenido, ${tipodeusuario} ${nombre} `;
+          if (tipodeusuario){
+            App.htmlElements.usuariobienvenido.textContent = `Bienvenido, ${tipodeusuario} ${nombre} `;   
+          }else{
+            App.htmlElements.usuariobienvenido.textContent = `Bienvenido, ${tipodeusuario} ${nombre} `;
+          }
+          
         },
         hacerLogout(){
           // aqui hay que borrar los token del usuario

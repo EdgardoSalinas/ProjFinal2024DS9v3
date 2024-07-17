@@ -1,3 +1,91 @@
+
+
+/* navbar*/
+ 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-company-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin-left: 20px;
+}
+
+.navbar-menu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-menu li a:hover {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+  }
+
+  .navbar-menu {
+      margin-top: 10px;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .navbar-menu li {
+      margin: 10px 0;
+  }
+}
+ 
+
+#spannombreusuario {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  padding-left: 10;
+}
+
+#usuariobienvenido {
+  color: #2563EB;
+  margin-left: 10px;
+  
+
+}
+
+
+/* navbar :end */
+
+/*BODY*/
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -12,95 +100,101 @@ body {
 .service-card {
   display: flex;
   background-color: #fff;
-  border-radius: 12px; /* Aumentado para un aspecto más suave */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+  border-radius: 13px; /* Aumentado un 10% */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 70%;
-  max-width: 760px;
-  margin: 0;
-
+  width: 100%; /* Aumentado un 10% desde 70% */
+  max-width: 836px; /* Aumentado un 10% desde 760px 836*/
+  margin: 0 0 22px 0; /* Aumentado el margen inferior un 10% */
+  align-self: flex-start; /* Alinea las tarjetas a la izquierda */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* agregrar mas espacio entre cada card */
-  margin-bottom: 20px; /* Aumentado para mayor espacio entre tarjetas */
-
 }
 
 .service-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 30px; /* Aumentado para mayor espacio entre tarjetas */
-  padding: 20px;
+  align-items: flex-start; /* Alinea el contenido a la izquierda */
+  gap: 33px; /* Aumentado un 10% */
+  padding: 22px; /* Aumentado un 10% */
   max-width: 100%;
   overflow-x: hidden;
 }
 
 .service-content {
-  padding: 15px;
+  padding: 16.5px; /* Aumentado un 10% */
   flex: 1;
   background-color: #E8F8FF;
   display: flex;
   flex-direction: column;
+  align-items: flex-start; /* Alinea el contenido a la izquierda */
 }
-
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
 
 .service-content h2 {
-  font-size: 20px;
-  margin: 0 0 10px;
+  font-size: 22px; /* Aumentado un 10% */
+  margin: 0 0 11px; /* Aumentado un 10% */
   color: #333;
 }
 
 .service-content p {
-  margin: 2px 0; /* Reducido para acercar los campos */
-  font-size: 14px;
-  line-height: 1.4; /* Añadido para mejorar la legibilidad */
+  margin: 12.2px 0; /* Aumentado un 10% 2.2*/
+  font-size: 17.4px; /* Aumentado un 10% */
+  line-height: 1.54; /* Aumentado un 10% */
 }
 
 .service-price {
-  font-size: 18px;
+  font-size: 19.8px; /* Aumentado un 10% */
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 11px; /* Aumentado un 10% */
   color: #007BFF;
 }
 
 .appointment-button {
-  align-self: flex-start; /* Alinea el botón a la izquierda */
-  margin-top: 12px;
-  padding: 8px 16px;
-  font-size: 14px;
+  align-self: flex-start;
+  margin-top: 13.2px; /* Aumentado un 10% */
+  padding: 8.8px 17.6px; /* Aumentado un 10% */
+  font-size: 15.4px; /* Aumentado un 10% */
   background-color: #007BFF;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 4.4px; /* Aumentado un 10% */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.appointment-button:hover {
-  background-color: #0056b3;
-}
-
 .service-image {
-  width: 30%;
-  min-width: 100px;
+  width: 60%; /* Aumentado un 10% */
+  min-width: 110px; /* Aumentado un 10% */
   background-color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Asegura que la imagen no se desborde */
+  overflow: hidden;
 }
 
-.service-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Estilos para el botón de cierre */
+#closeButton {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
 }
+
+#closeButton:hover {
+  background-color: #d32f2f;
+}
+
+/* ... (resto del CSS sin cambios) ... */
+
+
+/* version anterior */
 
 /* Estilos para los campos específicos */
 .service-content .field {
@@ -116,9 +210,18 @@ body {
   color: #555;
 }
 
-.service-content .field-value {
-  text-align: right;
+.service-content .field-value-h {
+  font-size: 16px; /* Aumentado un 10% */
+  font-weight: bold;
+  text-align: left;
   color: #333;
+  margin-bottom: 4px;
+}
+
+.service-content .field-value {
+  text-align: left;
+  color: #333;
+  margin-bottom: 4px;
 }
 
 /* Responsive design */
