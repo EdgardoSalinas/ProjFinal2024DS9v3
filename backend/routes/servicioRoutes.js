@@ -73,8 +73,9 @@ router.post('/servicios', authenticateToken, upload.single('photo'), async (req,
   }
 });
 
+//router.get('/serviciosgetall', authenticateToken, async (req, res) => {
 // Obtener todos los servicios
-router.get('/serviciosgetall', async (req, res) => {
+router.get('/serviciosgetall',  async (req, res) => {
   try {
     const services = await Service.find();
     res.status(200).send(services);
@@ -84,7 +85,7 @@ router.get('/serviciosgetall', async (req, res) => {
 });
 
 // Obtener un servicio por ID
-router.get('/servicios/:id', async (req, res) => {
+router.get('/servicios/:id', authenticateToken, async (req, res) => {
   try {
     const service = await Service.findById(req.params.id);
     if (!service) {
@@ -96,8 +97,37 @@ router.get('/servicios/:id', async (req, res) => {
   }
 });
 
+
+// POST /api/ordenes/rate
+router.post('/serviciorate', async (req, res) => {
+  //{ numeroOrden: orderId, usuario: req.user.id },
+    const { serviceId, rating } = req.body;
+    try {
+        const orden = await Service.findOneAndUpdate(
+            { _id: serviceId },
+            {
+                calificacion: {
+                    puntaje: rating,
+                    fecha: new Date()
+                }
+            },
+            { new: true }
+        );
+        if (!orden) {
+            return res.status(404).json({ success: false, message: 'Servcio rate no encontrado' });
+        }
+     
+
+        res.json({ success: true, message: 'Servicio calificado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error al calificar el servicio' });
+    }
+});
+
+
+
 // Actualizar un servicio por ID
-router.put('/servicios/:id', async (req, res) => {
+router.put('/serviciosputxid/:id', authenticateToken, async (req, res) => {
   try {
     const service = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!service) {
@@ -110,7 +140,7 @@ router.put('/servicios/:id', async (req, res) => {
 });
 
 // Eliminar un servicio por ID
-router.delete('/servicios/:id', async (req, res) => {
+router.delete('/servicios/:id', authenticateToken, async (req, res) => {
   try {
     const service = await Service.findByIdAndDelete(req.params.id);
     if (!service) {

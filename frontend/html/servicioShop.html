@@ -7,9 +7,17 @@
   <link rel="stylesheet" href="../css/servicioShop.css">
 </head>
 <body>
+
+   <header>
+    <div id="navbar-placeholder"></div>
+   </header>
+  
+   <main>
+
   <div class="page-container">
+
     <div class="service-container">
-      <button id="closeButton" class="close-button">Cerrar</button>
+      
       <div id="serviceList"></div>
       <div class="pagination">
         <button id="prevPage">Anterior</button>
@@ -23,30 +31,6 @@
     </div>
   </div>
 
-<!-- 
-  <h1>Servicios Disponibles</h1>
-  <div class="service-container">
-    <div id="serviceList"></div>
-    
-    <div class="service-container">
-
-      <div id="serviceList"></div>
-
-      <div class="order-container">
-        <h2>Órdenes</h2>
-        <div id="orderList"></div>
-      </div>
-
-      <button id="closeButton" class="close-button">Cerrar</button>
-
-      <div class="pagination">
-        <button id="prevPage">Anterior</button>
-        <span id="currentPage">1</span> / <span id="totalPages">1</span>
-        <button id="nextPage">Siguiente</button>
-      </div>
-
-    </div>
-  </div> -->
 
   <div id="appointmentModal" class="modal">
     <div class="modal-content">
@@ -63,6 +47,10 @@
   </div>
   </div>
 
+  <div>
+    <button id="closeButton" class="closeButton">Cerrar</button>
+  </div>
+
   <!-- <div id="appointmentForm" >
     <form id="forma>Cita">
 
@@ -70,6 +58,17 @@
   </div> -->
 
   <div id="paypal-button-container"></div>
+
+</main>
+
+  <script>
+    fetch('navbarG.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+        });
+
+  </script>
 
   <script src="https://www.paypal.com/sdk/js?client-id=AYwYDO3mUZuKKmbSWFOPJ6uLCoSWlLD2Pg6kbUn7AhmdvwKCyo6Uv8BsAIxMGAMBUNAvvoB-kvoYJXlg&currency=USD"></script>
 

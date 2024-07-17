@@ -9,7 +9,6 @@ app.use(express.json());
 
 const cors = require('cors');
 
-
 const { connectToDatabase } = require('./mongoose/db');
 const userRoutes = require('./routes/rutaUsers');
 const servicioRoutes = require('./routes/servicioRoutes');
@@ -19,7 +18,6 @@ const payOrdenRoutes = require('./routes/paypalRoutes');
 const crudModelos = require('./routes/crudRoutes');
 
 app.use(cors());
-
 
 app.use('/api/users', userRoutes);
 app.use('/api/servicios', servicioRoutes);
@@ -38,3 +36,4 @@ app.listen(PORT, () => {
   console.log(`jwt-palabra ${process.env.JWT_SECRET}`);
   console.log(`Server is running on port ${PORT}`);
 });
+

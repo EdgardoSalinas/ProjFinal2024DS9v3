@@ -39,6 +39,15 @@ const ServiceSchema = new mongoose.Schema({
         required: true,
     },
     photoUrl: String,
+    calificacion: { 
+        puntaje: { 
+          type: Number, 
+          min: 1, 
+          max: 5 
+        },
+        comentario: String, 
+        fecha: Date 
+      },
 });
 
 module.exports = mongoose.model('Service', ServiceSchema);

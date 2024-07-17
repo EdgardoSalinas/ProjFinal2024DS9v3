@@ -11,6 +11,7 @@ import config from '../config.js';
 
         htmlElements: {
             orderList: document.getElementById('orderList'),
+            cancelButton: document.getElementById('cancelButton'),
         },
         init() {
             App.bindEvents();
@@ -19,6 +20,7 @@ import config from '../config.js';
         bindEvents() {
             // No hay
             App.htmlElements.orderList.addEventListener('click', App.handlers.orderListClick);
+            App.htmlElements.cancelButton.addEventListener('click', App.handlers.cerrarBoton);
         },
         handlers: {
             changeStatus(orderId, newStatus) {
@@ -36,8 +38,14 @@ import config from '../config.js';
                 } else if (target.classList.contains('star')) {
                     const orderId = target.dataset.orderId;
                     const rating = target.dataset.rating;
+                    const servicioId = target.dataset.servicioId;
                     App.methods.rateOrder(orderId, rating);
+                  
+                    App.methods.updateService(servicioId, rating);
                 }
+            },
+            cerrarBoton(){
+                App.methods.cerrarBoton();
             },
         },
         methods: {
@@ -125,6 +133,60 @@ import config from '../config.js';
                     }
                 });
             },
+            
+
+            async updateService(serviceId, rating) {
+                const url = `${config.API_BASE_URL}/api/servicios/serviciorate`; // Asegúrate de que esta ruta coincida con tu configuración de servidor
+              
+                try {
+                  const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      // Incluye aquí cualquier header adicional que necesites, como tokens de autenticación
+                    },
+                    body: JSON.stringify({ serviceId, rating })
+                  });
+              
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+              
+                  const updatedService = await response.json();
+                  console.log('Servicio actualizado:', updatedService);
+                  return updatedService;
+                } catch (error) {
+                  console.error('Error al actualizar el servicio:', error);
+                  throw error;
+                }
+            },
+              
+
+
+            
+            rateServicio(servicioId, rating) {
+                fetch(`${config.API_BASE_URL}/api/ordenes/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ servicioId, rating })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        App.methods.fetchOrders();
+                    } else {
+                        alert('Error al actualizar el servicio');
+                    }
+                });
+            },
+
+            cerrarBoton() {
+                window.location.href = "../index.html";
+                //window.history.back();
+              },
+            
         },
         templates: {
 
@@ -139,11 +201,11 @@ import config from '../config.js';
                             `<button class="status-button" data-order-id="${order.numeroOrden}">Marcar como Completado</button>` : ''}
                         ${order.estado === 'completado' && !order.calificacion ?
                             `<div class="stars">
-                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="1">☆</span>
-                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="2">☆</span>
-                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="3">☆</span>
-                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="4">☆</span>
-                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="5">☆</span>
+                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="1" data-servicio-id="${order.idDelServicio}">☆</span>
+                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="2" data-servicio-id="${order.idDelServicio}">☆</span>
+                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="3" data-servicio-id="${order.idDelServicio}">☆</span>
+                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="4" data-servicio-id="${order.idDelServicio}">☆</span>
+                                <span class="star" data-order-id="${order.numeroOrden}" data-rating="5" data-servicio-id="${order.idDelServicio}">☆</span>
                             </div>` : ''}
                         ${order.calificacion ? `<p>Calificación: ${'★'.repeat(order.calificacion.puntaje)}${'☆'.repeat(5-order.calificacion.puntaje)}</p>` : ''}
                     </div>
